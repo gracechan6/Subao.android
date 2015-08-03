@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/michael/Documents/Personal/DevelopSourceCode/Android/JWMsgCenter/jinwanguibase/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="badger_bg_color_default">#CCFF0000</color>
+    <color name="badger_text_color_default">#FFFFFFFF</color>
+    <color name="switch_checked_">#4CD964</color>
+    <color name="switch_stoke_">#e5e5e5</color>
+    <color name="white_">#FFFFFF</color>
+    <declare-styleable name="CircleImageView"><attr format="dimension" name="border_width_"/><attr format="color" name="border_color_"/></declare-styleable>
+    <declare-styleable name="TabItemView"><attr format="string" name="itemText_"/><attr format="reference" name="itemIcon_"/><attr format="dimension" name="itemDrawablePadding_"/><attr format="color" name="itemTextColor_"/><attr format="dimension" name="itemPadding_"/><attr format="dimension" name="itemPaddingLeft_"/><attr format="dimension" name="itemPaddingTop_"/><attr format="dimension" name="itemPaddingRight_"/><attr format="dimension" name="itemPaddingBottom_"/><attr format="integer" name="badgerValue_"/><attr format="reference" name="badgerBackground_"/><attr format="dimension" name="badgerWidth_"/><attr format="dimension" name="badgerHeight_"/><attr format="boolean" name="showBadger_"/><attr format="color" name="badgerTextColor_"/><attr format="dimension" name="badgerTextSize_"/><attr format="dimension|reference" name="badgerMargin_"/><attr format="dimension|reference" name="badgerMarginTop_"/><attr format="dimension|reference" name="badgerMarginLeft_"/><attr format="dimension|reference" name="badgerMarginRight_"/><attr format="dimension|reference" name="badgerMarginBottom_"/></declare-styleable>
+    <!-- From: file:/Users/michael/Documents/Personal/DevelopSourceCode/Android/JWMsgCenter/jinwanguibase/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="switch_height_">25dp</dimen>
+    <dimen name="switch_width_">40dp</dimen>
+    <dimen name="tab_badger_size_">14dp</dimen>
+    <!-- From: file:/Users/michael/Documents/Personal/DevelopSourceCode/Android/JWMsgCenter/jinwanguibase/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">app</string>
+    <!-- From: file:/Users/michael/Documents/Personal/DevelopSourceCode/Android/JWMsgCenter/jinwanguibase/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppTheme.Base_" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+</resources>

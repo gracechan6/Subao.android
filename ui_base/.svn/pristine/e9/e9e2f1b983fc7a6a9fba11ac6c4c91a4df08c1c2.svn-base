@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <stroke
+        android:color="#d1d2d5"
+        android:width="1px"/>
+    <solid android:color="#FFFFFF"/>
+
+</shape><!-- From: file:/Users/michael/Documents/JinwangSVN/产品/消息中心/源代码/安卓客户端/JWMsgCenter/jinwanguibase/src/main/res/drawable/tab_widget_shape_.xml --><!-- From: file:/Users/michael/Documents/JinwangSVN/产品/消息中心/源代码/安卓客户端/JWMsgCenter/jinwanguibase/build/intermediates/bundles/debug/res/drawable/tab_widget_shape_.xml -->

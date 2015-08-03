@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+
+       android:shape="oval" >
+
+    <solid android:color="#CCFF0000"/>
+
+</shape>
+<!-- From: file:/Users/michael/Documents/Personal/DevelopSourceCode/Android/JWMsgCenter/jinwanguibase/src/main/res/drawable/badger_bg_.xml -->

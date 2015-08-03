@@ -1,0 +1,41 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.jinwang.subao.normal"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile project(':cropper')
+    compile files('libs/ddpush-1.0.02.jar')
+    compile project(':ui_base')
+    compile 'com.loopj.android:android-async-http:1.4.8'
+    compile 'com.jinwangmobile:core-dataparser:1.0.0-SNAPSHOT'
+    compile project(':subaoshared')
+}
+
+repositories {
+    maven { url 'http://192.168.0.89:8081/nexus/content/groups/public/' }
+    maven { url 'http://192.168.0.89:8081/nexus/content/repositories/thirdparty/'}
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="tab_badger_size_">14dp</dimen>
+    <dimen name="switch_height_">25dp</dimen>
+    <dimen name="switch_width_">40dp</dimen>
+
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.jinwangmobile.ui.base.view.TabItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tabItem="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#2c2f39"
+    tabItem:itemPadding_="0px"
+    tabItem:itemPaddingLeft_="0dp"
+    tabItem:itemPaddingRight_="0dp"
+    tabItem:badgerHeight_="@dimen/tab_badger_size_"
+    tabItem:badgerWidth_="@dimen/tab_badger_size_"
+    tabItem:itemPaddingTop_="5dp"
+    tabItem:itemPaddingBottom_="5dp"
+    tabItem:itemIcon_="@drawable/tab_item_contact_selector"
+    tabItem:itemTextColor_="@color/tab_text_selector"
+    tabItem:itemText_="@string/express_delivery">
+
+</com.jinwangmobile.ui.base.view.TabItemView>
