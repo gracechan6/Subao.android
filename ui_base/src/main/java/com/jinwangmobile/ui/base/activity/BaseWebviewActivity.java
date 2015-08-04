@@ -7,8 +7,9 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.InputEvent;
@@ -19,6 +20,7 @@ import android.webkit.ClientCertRequest;
 import android.webkit.ConsoleMessage;
 import android.webkit.GeolocationPermissions;
 import android.webkit.HttpAuthHandler;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.PermissionRequest;
@@ -28,7 +30,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
-import android.webkit.WebStorage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -40,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by michael on 15/7/31.
@@ -67,6 +67,8 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
     private JSONArray mTransferData;
     //回调函数返回数据
     private JSONArray mCallbackData;
+
+    private Handler mHandler = new android.os.Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -983,11 +985,13 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
 
         setWebviewChromeClient();
         setWebviewClient();
+
+        mWebview.addJavascriptInterface(this, "jsInterface");
     }
 
     /**
-     * 设置导航栏背景着色
-     * @param color 背影着色
+     * 设置导航栏背景颜色
+     * @param color 背影颜色
      */
     public void setActionBarBackgroundColor(int color)
     {
@@ -1062,10 +1066,76 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
         mUrlPath = path;
     }
 
+    //================================js interface methods
+
+    @JavascriptInterface
     @Override
-    public void jsSetTitle(String title) {
-        mActionBar.setTitle(title);
+    public void jsSetTitle(final String title) {
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mActionBar.setTitle(title);
+            }
+        });
     }
+
+    /**
+     * 显示新的页面
+     *
+     * @param data 数据，包括传递的参数和其它数据
+     */
+    @JavascriptInterface
+    @Override
+    public void jsShowPage(final Object data) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                showPage(data);
+            }
+        });
+    }
+
+    /**
+     * 返回到上一界面
+     *
+     * @param data 数据，包括传递的参数和其它数据
+     */
+    @JavascriptInterface
+    @Override
+    public void jsGoBack(final Object data) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                goBack(data);
+            }
+        });
+    }
+
+    /**
+     * java script 传递数据给原生
+     *
+     * @param data : 数据，包括传递的参数和其它数据
+     */
+    @JavascriptInterface
+    @Override
+    public void jsTransferData(final Object data) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                transferData(data);
+            }
+        });
+    }
+
+    //====================================================
+
+    //======================real do sth
+    // 实现这些方法，完成与html交互
+    public abstract void transferData(final Object data);
+    public abstract void goBack(final Object data);
+    public abstract void showPage(final Object data);
+    //=================================
 
     /**
      * 设置请求参数

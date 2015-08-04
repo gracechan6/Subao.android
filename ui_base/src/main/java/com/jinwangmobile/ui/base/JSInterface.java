@@ -25,8 +25,9 @@ public interface JSInterface {
 
     /**
      * java script 传递数据给原生
+     * 暂时未定义
      *
-     * @param data: 数据，包括传递的参数和其它数据
+     * @param data: 数据
      */
     public void jsTransferData(Object data);
 }

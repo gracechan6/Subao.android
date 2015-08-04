@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -55,14 +56,17 @@ public class LoginActivity extends BaseActivity {
             userNameEdit.setText(saveUserName);
             passwordEdit.setText(sp.getString(PreferenceUtils.PREFERENCE_PASSWORD, ""));
         }
-
+        //登陆按钮绑定
         btnLogin = (Button) findViewById(R.id.btn_login);
+        //忘记密码按钮绑定
         forgetPasswd = (TextView) findViewById(R.id.tv_forget_passwd);
+        //注册按钮绑定
         register = (TextView) findViewById(R.id.tv_register);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(getClass().getSimpleName(), "btnLogin");
                 doLogin();
             }
         });
@@ -70,6 +74,7 @@ public class LoginActivity extends BaseActivity {
         forgetPasswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(getClass().getSimpleName(), "forgetPasswd");
                 Intent intent = new Intent(LoginActivity.this, ForgetPasswdActivity.class);
                 startActivity(intent);
             }
@@ -105,11 +110,12 @@ public class LoginActivity extends BaseActivity {
 ////                startActivity(intent);
 //            }
 //        });
-
+        //导航栏添加注册按钮
         mToolBar.inflateMenu(R.menu.menu_register);
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
+                Log.i(getClass().getSimpleName(), "注册");
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
                 return true;
@@ -124,12 +130,13 @@ public class LoginActivity extends BaseActivity {
 
         //合法性检查
         if(userName == null || userName.toString().trim().length() == 0){
-            Toast.makeText(getApplicationContext(), "用户名不能为空", Toast.LENGTH_SHORT).show();
+            Log.i(getClass().getSimpleName(), "用户名不能为空login");
+            Toast.makeText(getApplicationContext(), "用户名不能为空login", Toast.LENGTH_SHORT).show();
             loadingDialog.dismiss();
             return;
         }
         if(password == null || password.toString().trim().length() == 0){
-            Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "密码不能为空login", Toast.LENGTH_SHORT).show();
             loadingDialog.dismiss();
             return;
         }
@@ -137,6 +144,7 @@ public class LoginActivity extends BaseActivity {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
+        loadingDialog.dismiss();
 
 //        RequestParams params = new RequestParams();
 //        params.put(AppParams.USERNAME, userName);
