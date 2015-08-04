@@ -38,3 +38,4 @@ ui_base/build
 normal/build
 cropper/build
 ui_base
+settings.gradle

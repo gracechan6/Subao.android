@@ -1,1 +1,1 @@
-include ':subaoshared', ':cropper', ':normal'
+include ':subaoshared', ':cropper', ':normal', ':ui_base'
