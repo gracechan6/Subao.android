@@ -8,6 +8,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.InputEvent;
@@ -35,8 +36,10 @@ import com.jinwangmobile.ui.base.JSInterface;
 import com.jinwangmobile.ui.base.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -45,7 +48,7 @@ import java.util.Map;
  */
 public abstract class BaseWebviewActivity extends BaseActivity implements JSInterface {
     //导航栏
-    private Toolbar mActionBar;
+    protected Toolbar mActionBar;
 
     //浏览器
     protected WebView mWebview;
@@ -64,6 +67,13 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
     private JSONArray mTransferData;
     //回调函数返回数据
     private JSONArray mCallbackData;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_base_webview_);
+    }
 
     @Override
     @TargetApi(11)
@@ -894,12 +904,50 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
      */
     protected void webviewLoadData()
     {
-        byte[] postData = null;
-        if (null == mParams)
+        String requestParam = "";
+
+        if (null != mUrlPath)
         {
-            postData = mParams.toString().getBytes();
+            try {
+                requestParam = convertRequestParams(mParams);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e(getClass().getSimpleName(), "JSON Error: " + e.toString());
+            }
         }
-        mWebview.postUrl(mUrlPath, postData);
+        mWebview.loadUrl(mUrlPath + requestParam);
+        Log.i(getClass().getSimpleName(), "Request path: " + mUrlPath + " params: " + requestParam);
+    }
+
+    /**
+     * 请求JSON参数转换为请求字符串参数
+     * @param params    请求参数JSON
+     * @return          请求字符串
+     * @throws JSONException
+     */
+    protected String convertRequestParams(JSONObject params) throws JSONException {
+        if (null == params)
+        {
+            return null;
+        }
+
+
+        Iterator<String> keys = params.keys();
+        if (!keys.hasNext())
+        {
+            return null;
+        }
+
+        String result = "?";
+
+        while (keys.hasNext())
+        {
+            String key = keys.next();
+            result += (key + "=");
+            result += (params.get(key) + "&");
+        }
+
+        return result.substring(0, result.length()-1);
     }
 
     @Override
