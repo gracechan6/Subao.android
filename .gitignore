@@ -37,3 +37,4 @@ subaoshared/build
 ui_base/build
 normal/build
 cropper/build
+ui_base

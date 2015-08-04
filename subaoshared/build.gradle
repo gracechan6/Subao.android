@@ -21,6 +21,14 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile project(':ui_base')
+
+    compile 'com.jinwangmobile:core-dataparser:1.0.0-SNAPSHOT'
+    compile 'com.jinwang.mobile:ui-base:1.0.1'
+    compile 'com.loopj.android:android-async-http:1.4.8'
     compile project(':cropper')
+}
+
+repositories {
+    maven { url 'http://192.168.0.89:8081/nexus/content/groups/public/' }
+    maven { url 'http://192.168.0.89:8081/nexus/content/repositories/thirdparty/'}
 }
