@@ -48,6 +48,21 @@ public class MainActivity extends BaseWebviewActivity {
     }
 
     @Override
+    public void transferData(Object o) {
+
+    }
+
+    @Override
+    public void goBack(Object o) {
+
+    }
+
+    @Override
+    public void showPage(Object o) {
+
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
