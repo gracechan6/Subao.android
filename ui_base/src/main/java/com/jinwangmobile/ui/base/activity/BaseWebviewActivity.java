@@ -8,6 +8,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.InputEvent;
@@ -45,7 +46,7 @@ import java.util.Map;
  */
 public abstract class BaseWebviewActivity extends BaseActivity implements JSInterface {
     //导航栏
-    private Toolbar mActionBar;
+    protected Toolbar mActionBar;
 
     //浏览器
     protected WebView mWebview;
@@ -895,11 +896,19 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
     protected void webviewLoadData()
     {
         byte[] postData = null;
-        if (null == mParams)
+        if (null != mParams)
         {
             postData = mParams.toString().getBytes();
         }
-        mWebview.postUrl(mUrlPath, postData);
+//        mWebview.postUrl("file:///android_asset/mPuTong/index.html?Muuid=1234567890", postData);
+        mWebview.loadUrl("file:///android_asset/mPuTong/index.html?Muuid=1234567890");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_base_webview_);
     }
 
     @Override
@@ -1071,5 +1080,10 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
     public JSONArray getCallbackData()
     {
         return mCallbackData;
+    }
+
+    @Override
+    public void jsShowPage(Object data) {
+        Log.i(getClass().getSimpleName(), "jsShowPage: "+data.toString());
     }
 }

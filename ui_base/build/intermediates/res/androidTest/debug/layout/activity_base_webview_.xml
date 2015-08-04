@@ -17,4 +17,4 @@
         android:layout_weight="1.0"
         android:id="@+id/webview_" />
 
-</LinearLayout><!-- From: file:/Users/michael/AndroidStudioProjects/Subao/ui_base/src/main/res/layout/activity_base_webview_.xml --><!-- From: file:/Users/michael/AndroidStudioProjects/Subao/ui_base/build/intermediates/bundles/debug/res/layout/activity_base_webview_.xml -->
+</LinearLayout><!-- From: file:/C:/Users/ASUS/Desktop/工作安排/20150803/Subao.android/ui_base/src/main/res/layout/activity_base_webview_.xml --><!-- From: file:/C:/Users/ASUS/Desktop/工作安排/20150803/Subao.android/ui_base/build/intermediates/bundles/debug/res/layout/activity_base_webview_.xml -->

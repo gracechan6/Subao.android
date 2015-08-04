@@ -7,4 +7,4 @@
     android:textOn=""
     android:checked="true"
     android:thumb="@drawable/switch_thumb_"
-    android:track="@drawable/switch_track_" /><!-- From: file:/Users/michael/AndroidStudioProjects/Subao/ui_base/src/main/res/layout/switch_.xml --><!-- From: file:/Users/michael/AndroidStudioProjects/Subao/ui_base/build/intermediates/bundles/debug/res/layout/switch_.xml -->
+    android:track="@drawable/switch_track_" /><!-- From: file:/C:/Users/ASUS/Desktop/工作安排/20150803/Subao.android/ui_base/src/main/res/layout/switch_.xml --><!-- From: file:/C:/Users/ASUS/Desktop/工作安排/20150803/Subao.android/ui_base/build/intermediates/bundles/debug/res/layout/switch_.xml -->
