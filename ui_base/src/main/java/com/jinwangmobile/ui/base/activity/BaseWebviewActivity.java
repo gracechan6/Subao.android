@@ -66,22 +66,6 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
     private JSONArray mCallbackData;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_webview_);
-
-        mActionBar = (Toolbar) findViewById(R.id.actionBar_);
-        mWebview = (WebView) findViewById(R.id.webview_);
-
-        initWebview();
-
-        if (null != mUrlPath)
-        {
-            webviewLoadData();
-        }
-    }
-
-    @Override
     @TargetApi(11)
     protected void onPause() {
         super.onPause();
@@ -612,7 +596,7 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
             return;
         }
         //传递参数
-        view.loadUrl("javascript:jwGobal.transferData('" + getParams()+ "')");
+        view.loadUrl("javascript:jwGobal.transferData('" + getParams() + "')");
     }
 
     /**
@@ -687,7 +671,7 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
      * itself, otherwise return false
      */
     public boolean webviewShouldOverrideKeyEvent(WebView view, KeyEvent event) {
-        Log.i(getClass().getSimpleName(), "Web view Chrome Client: " + "webviewShouldOverrideKeyEvent" );
+        Log.i(getClass().getSimpleName(), "Web view Chrome Client: " + "webviewShouldOverrideKeyEvent");
 
         return false;
     }
@@ -908,9 +892,29 @@ public abstract class BaseWebviewActivity extends BaseActivity implements JSInte
     /**
      * 加载数据
      */
-    private void webviewLoadData()
+    protected void webviewLoadData()
     {
-        mWebview.postUrl(mUrlPath, mParams.toString().getBytes());
+        byte[] postData = null;
+        if (null == mParams)
+        {
+            postData = mParams.toString().getBytes();
+        }
+        mWebview.postUrl(mUrlPath, postData);
+    }
+
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
+
+        mActionBar = (Toolbar) findViewById(R.id.actionBar_);
+        mWebview = (WebView) findViewById(R.id.webview_);
+
+        initWebview();
+
+        if (null != mUrlPath)
+        {
+            webviewLoadData();
+        }
     }
 
     /**
