@@ -1,16 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg">
     <include layout="@layout/layout_toolbar_"
         android:id="@+id/toolbar"/>
-    <FrameLayout
+    <!--<FrameLayout
         android:id="@+id/realtabcontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar" />
-<!--    <RadioGroup android:id="@+id/radioGroup"
+        android:layout_below="@id/toolbar" />-->
+   <!-- <RadioGroup android:id="@+id/radioGroup"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
         android:orientation="horizontal"
@@ -30,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"/>
     </RadioGroup>-->
-<!--    <WebView
+    <!--<WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"

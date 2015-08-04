@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -65,11 +66,13 @@ public class RegisterActivity extends BaseActivity {
         final String password = passwordEdit.getText().toString();
         //合法性检查
         if(userName == null || userName.toString().trim().length() == 0){
-            Toast.makeText(getApplicationContext(), "用户名不能为空", Toast.LENGTH_SHORT).show();
+            Log.i("RegisterActivity", "userName");
+            Toast.makeText(getApplicationContext(), "用户名不能为空Register", Toast.LENGTH_SHORT).show();
             return;
         }
         if(password == null || password.toString().trim().length() == 0){
-            Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
+            Log.i("RegisterActivity", "password");
+            Toast.makeText(getApplicationContext(), "密码不能为空Register", Toast.LENGTH_SHORT).show();
             return;
         }
         RequestParams params = new RequestParams();

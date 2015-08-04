@@ -21,20 +21,17 @@
         <activity
             android:name="com.jinwang.subao.activity.SplashActivity"
             android:label="@string/app_name" >
+
+        </activity>
+        <activity
+            android:name="com.jinwang.subao.normal.activity.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name="com.jinwang.subao.activity.LoginActivity"/>
-        <activity android:name="com.jinwang.subao.activity.MainActivity"/>
-
-        <activity
-            android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.RegisterActivity"
