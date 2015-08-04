@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/cropper" />
             <option value="$PROJECT_DIR$/normal" />
             <option value="$PROJECT_DIR$/subaoshared" />
-            <option value="$PROJECT_DIR$/ui_base" />
           </set>
         </option>
       </GradleProjectSettings>
