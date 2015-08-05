@@ -1,7 +1,11 @@
 package com.jinwang.subao.normal;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +13,10 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.widget.TextView;
 
 import com.jinwang.subao.normal.activity.SettingActivity;
@@ -25,10 +32,14 @@ import com.jinwangmobile.ui.base.activity.BaseWebviewActivity;
  */
 public class MainActivity extends BaseWebviewActivity {
 //    private Toolbar mToolBar;
+    private SurfaceHolder sfh;
+    private Canvas canvas;
+    private Paint paint;
     private TextView mTitle;
     //导航栏
 //    private Toolbar mActionBar;
     private FragmentManager fragmentManager;
+    private Bitmap bg;
 
     public String path="file:///android_asset/mPuTong/index.html";
 
@@ -36,25 +47,44 @@ public class MainActivity extends BaseWebviewActivity {
         mActionBar.setTitle(title);
     }
 
+    /*@JavascriptInterface
     @Override
-    public void jsShowPage(Object data){
+    public void jsShowPage(Object data) {
         Log.i(getClass().getSimpleName(), "jsShowPage: "+data.toString());
-    }
-    public void jsGoBack(Object data){
+    }*/
+
+    @Override
+    public void transferData(Object o) {
 
     }
-    public void jsTransferData(Object data) {
+
+    @Override
+    public void goBack(Object o) {
 
     }
 
+    @Override
+    public void showPage(Object o) {
+        Log.i(getClass().getSimpleName(), "showPage: " + o);
+    }
+    /*public void draw(){
+        canvas=sfh.lockCanvas();
+        bg= BitmapFactory.decodeResource(getResources(),R.drawable.bg);
+        canvas.drawBitmap(bg);
+    }*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_main);
+//        mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        bg= BitmapFactory.decodeResource(getResources(),R.drawable.bg);
+        WebSettings settings = mWebview.getSettings();
+        settings.setDomStorageEnabled(true);
         bindDDPushStart();
         initToolBar();
+        Log.i(getClass().getSimpleName(), "web view Load Data: " + "setUrlPath:");
         setUrlPath(path);
-//        Log.i(getClass().getSimpleName(), "web view Load Data: " + "mUrlPath:");
+//        mWebview.setBackgroundColor(Color.BLACK);
         webviewLoadData();
 //        initView();
     }

@@ -35,7 +35,13 @@
             android:singleLine="true"
             android:textSize="18sp" />
     </RelativeLayout>
-
+<!--    <TextView
+        android:id="@+id/useName"
+        style="@style/setting_textview_style"
+        android:text="王小波"
+        android:layout_centerVertical="true"
+        android:textColor="#000000"
+        android:textSize="@dimen/text_size_mid"/>-->
     <ListView
         android:id="@+id/listview"
         android:layout_width="fill_parent"
