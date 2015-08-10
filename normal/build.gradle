@@ -28,6 +28,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile files('libs/ddpush-1.0.02.jar')
     compile project(':subaoshared')
+//    compile 'com.jinwang.mobile:ui-base:1.1.0'
+//    compile project(':test')
 }
 
 repositories {

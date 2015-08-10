@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -37,6 +38,7 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
     private Button btnExit;
     private Toolbar mToolBar;
     private TextView mTitle;
+    private TextView mID;
 
     private UserInfo mUserInfo;
     public static final String PHOTO_TYPE = "PHOTO_TYPE";
@@ -162,7 +164,6 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
 //
 //        }
         userName.setText(mUserInfo.getUserName());
-
         setHeadImage();
     }
 
@@ -201,6 +202,7 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
 
     @Override
     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+        Log.i(getClass().getSimpleName(), "Click item index [" + index + "]");
         changePhoto(index);
     }
 

@@ -4,6 +4,6 @@
 
     <item android:id="@+id/contact"
           android:icon="@drawable/icon_settings"
-          android:title="@string/action_settings"
+          android:title="@string/action_success"
           app:showAsAction="ifRoom"/>
 </menu>

@@ -1,13 +1,8 @@
 package com.jinwang.subao.normal;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
@@ -15,85 +10,40 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.widget.TextView;
 
 import com.jinwang.subao.normal.activity.SettingActivity;
 import com.jinwang.subao.normal.chat.ChatMsgListActivity;
-import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwang.subao.normal.chat.ddpush.ChatService;
-import com.jinwang.subao.normal.R;
 import com.jinwangmobile.ui.base.activity.BaseWebviewActivity;
+
+import org.json.JSONArray;
 
 
 /**
  * Created by dreamy on 2015/6/25.
  */
-public class MainActivity extends BaseWebviewActivity {
+public class MainActivity extends WebviewActivity {
 //    private Toolbar mToolBar;
     private SurfaceHolder sfh;
-    private Canvas canvas;
-    private Paint paint;
     private TextView mTitle;
-    //导航栏
-//    private Toolbar mActionBar;
-    private FragmentManager fragmentManager;
-    private Bitmap bg;
+    JSONArray allObject=new JSONArray();
+    private  String rootUrl="file:///android_asset/mPuTong/";
 
-    public String path="file:///android_asset/mPuTong/index.html";
-
-    public  void jsSetTitle(String title){
-        mActionBar.setTitle(title);
-    }
-
-    /*@JavascriptInterface
-    @Override
-    public void jsShowPage(Object data) {
-        Log.i(getClass().getSimpleName(), "jsShowPage: "+data.toString());
-    }*/
-
-    @Override
-    public void transferData(Object o) {
-
-    }
-
-    @Override
-    public void goBack(Object o) {
-
-    }
-
-    @Override
-    public void showPage(Object o) {
-        Log.i(getClass().getSimpleName(), "showPage: " + o);
-    }
-    /*public void draw(){
-        canvas=sfh.lockCanvas();
-        bg= BitmapFactory.decodeResource(getResources(),R.drawable.bg);
-        canvas.drawBitmap(bg);
-    }*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        mWebview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//        bg= BitmapFactory.decodeResource(getResources(),R.drawable.bg);
-        WebSettings settings = mWebview.getSettings();
-        settings.setDomStorageEnabled(true);
+//        Log.i(getClass().getSimpleName(), "onCreate");
+//        WebSettings settings = mWebview.getSettings();
+//        settings.setDomStorageEnabled(true);
         bindDDPushStart();
         initToolBar();
-        Log.i(getClass().getSimpleName(), "web view Load Data: " + "setUrlPath:");
-        setUrlPath(path);
-//        mWebview.setBackgroundColor(Color.BLACK);
+        setUrlPath(rootUrl + "index.html");
         webviewLoadData();
-//        initView();
     }
-
-
-
     protected void initToolBar()
     {
-//        mToolBar = (Toolbar)findViewById(R.id.toolbar);
         //设置自定义标题
         Toolbar.LayoutParams lp = new Toolbar.LayoutParams(Toolbar.LayoutParams.WRAP_CONTENT, Toolbar.LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.CENTER;
@@ -127,6 +77,20 @@ public class MainActivity extends BaseWebviewActivity {
         startSrv.putExtra("CMD", "RESET");
         this.startService(startSrv);
     }
-//    private void initView(){
-//    }
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == NEXT_ACTIVITY_REQUEST_CODE && null != data) {
+            String transferData = data.getStringExtra(EXTRA_TRANSFER_DATA);
+
+            //有回传数据
+            if (null != transferData) {
+
+                Log.i(getClass().getSimpleName(), "Transfer callback data: " + transferData);
+
+                //传递参数
+                mWebview.loadUrl("javascript:jwGobal.transferData('" + transferData + "')");
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }*/
 }

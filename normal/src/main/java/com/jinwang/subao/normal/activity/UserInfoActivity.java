@@ -35,7 +35,7 @@ public class UserInfoActivity extends BaseActivity implements ActionSheet.Action
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         initToolBar();
-        initView();
+//        initView();
 //        initUserInfo();
     }
 

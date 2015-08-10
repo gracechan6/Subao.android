@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jinwang.subao.normal.R;
+import com.jinwang.subao.normal.WebviewActivity;
 import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwang.subao.normal.chat.adapter.ChatMessageListAdapter;
 import com.jinwang.subao.normal.chat.entity.ChatList;
@@ -30,17 +31,19 @@ public class ChatMsgListActivity extends BaseActivity {
     protected ChatMessageListAdapter adapter;
     private ListView mListView;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_msg_list);
+//        setContentView(R.layout.layout_login);
         initToolBar();
 //        ChatModel.insertChatListTestData(this);
 //        mListView = (ListView) findViewById(R.id.listview);
         mListView = (ListView) findViewById(R.id.listview);
-        mList = ChatModel.queryChatList(this);
-        adapter = new ChatMessageListAdapter(this, mList);
-        mListView.setAdapter(adapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//        mList = ChatModel.queryChatList(this);
+//        adapter = new ChatMessageListAdapter(this, mList);
+//        mListView.setAdapter(adapter);
+        /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
@@ -52,7 +55,7 @@ public class ChatMsgListActivity extends BaseActivity {
                 startActivity(intent);
 
                 Log.i(this.getClass().getName(), "Item clicked");
-            }} );
+            }} );*/
     }
 
     protected void initToolBar()
