@@ -1,6 +1,10 @@
 package com.jinwang.subao.normal.activity;
 
+import android.app.Activity;
+import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,12 +16,24 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jinwang.subao.normal.R;
+import com.jinwang.subao.normal.config.ActionConfig;
+import com.jinwang.subao.normal.config.ConstantConfig;
+import com.jinwang.subao.normal.config.ServerConfig;
 import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwangmobile.ui.base.view.CircleImageView;
 import com.jinwang.subao.normal.entity.UserInfo;
 import com.jinwang.subao.normal.view.ActionSheet;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by dreamy on 2015/6/29.
@@ -39,11 +55,29 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
     private Toolbar mToolBar;
     private TextView mTitle;
     private TextView mID;
+    private AsyncHttpClient client;
 
     private UserInfo mUserInfo;
     public static final String PHOTO_TYPE = "PHOTO_TYPE";
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.i(getClass().getSimpleName(), "Request ok with code[" + requestCode + "]");
+        if (CROP_REQUEST_CODE == requestCode && resultCode == Activity.RESULT_OK)
+        {
+            String bitmap = data.getStringExtra("BITMAP_DATA");
+            Log.i(getClass().getSimpleName(), "bitmap"+bitmap);
+            if (null != bitmap)
+            {
+                uploadPhoto(bitmap);
+            }
+            else
+            {
+//                Toast.makeText(application, "", Toast.LENGTH_SHORT);
+            }
+        }
+    }
     @Override
     public  void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -214,5 +248,64 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
         Intent intent = new Intent(this, CropActivity.class);
         intent.putExtra(PHOTO_TYPE, index);
         startActivityForResult(intent, CROP_REQUEST_CODE);
+    }
+
+    /**
+     * 上传头像到服务器以便从服务器获取图像
+     * @param bitmap  头像本地存储路径
+     */
+    private void uploadPhoto(String bitmap)
+    {
+        Log.i(getClass().getSimpleName(), "enter uploadPhoto"+bitmap);
+        //上传本地存在问题调用更换头像方法
+        setHeadPhoto(bitmap);
+        //保存头像到临时文件，上传完成后删除
+        final File file = new File(bitmap);
+        try
+        {
+            RequestParams params = new RequestParams();
+            //设置请求参数
+//            params.put("fileName",);
+            params.put("pic", file);
+
+            String url = ServerConfig.getAbsluteUrl(ActionConfig.ACTION_UPLOAD);
+            client.post(url, params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                }
+            });
+
+        } catch (IOException e)
+        {
+            Log.e(getClass().getSimpleName(), e.toString());
+        }
+    }
+
+    /**
+     * 设置头像
+     * @param bitmap  头像路径
+     */
+    public void setHeadPhoto(String bitmap)
+    {
+        Log.i(getClass().getSimpleName(), "enter setHeadPhoto " + bitmap);
+        //因为图片没有上传服务器直接从本地获取
+        //创建图片
+        File headF=new File(bitmap);
+        //绘图
+        Bitmap head=null;
+        Log.i(getClass().getSimpleName(), "headF.exists "+headF.exists());
+        if(headF.exists()){
+            //解决加载大图片内存溢出问题
+            BitmapFactory.Options options=new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            head = BitmapFactory.decodeFile(bitmap, options);
+            headImage.setImageBitmap(head);
+        }
     }
 }

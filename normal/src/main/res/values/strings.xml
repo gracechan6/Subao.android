@@ -3,6 +3,7 @@
 
     <string name="app_login">登录</string>
     <string name="action_register">注册</string>
+    <string name="action_mobile_code">验证</string>
     <string name="action_input_code">输入验证码</string>
     <string name="edit_user_info">编辑资料</string>
 

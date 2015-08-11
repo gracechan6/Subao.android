@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinwang.subao.normal.R;
+import com.jinwang.subao.normal.entity.UserInfo;
 import com.jinwangmobile.core.dataparser.json.AbsJSONUtils;
 import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwang.subao.normal.ResAuthActivity;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by dreamy on 2015/6/23.
@@ -67,21 +69,25 @@ public class RegisterActivity extends BaseActivity {
         //合法性检查
         if(userName == null || userName.toString().trim().length() == 0){
             Log.i("RegisterActivity", "userName");
-            Toast.makeText(getApplicationContext(), "用户名不能为空Register", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "用户名不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
         if(password == null || password.toString().trim().length() == 0){
             Log.i("RegisterActivity", "password");
-            Toast.makeText(getApplicationContext(), "密码不能为空Register", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        RequestParams params = new RequestParams();
-        params.put(AppParams.USERNAME, userName);
-
-        String url = UrlParam.GET_VERCODE_URL;
-
-        AsyncHttpClient client = ((SubaoApplication)getApplication()).getSharedHttpClient();
-        client.get(url, params, new AsyncHttpResponseHandler() {
+        //打开新的activity
+        sendCode();
+        Intent intent = new Intent(RegisterActivity.this, MobileCodeActivity.class);
+        intent.putExtra("userName", userName);
+        intent.putExtra("password",password);
+        startActivity(intent);
+//        RequestParams params = new RequestParams();
+//        params.put(AppParams.USERNAME, userName);
+//        String url = UrlParam.GET_VERCODE_URL;
+//        AsyncHttpClient client = ((SubaoApplication)getApplication()).getSharedHttpClient();
+        /*client.get(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] responseBody) {
                 loadingDialog.dismiss();
@@ -122,7 +128,7 @@ public class RegisterActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(), "注册提交失败", Toast.LENGTH_SHORT).show();
                 finish();
             }
-        });
+        });*/
     }
 
     protected void initToolBar()
@@ -145,6 +151,47 @@ public class RegisterActivity extends BaseActivity {
                 RegisterActivity.this.finish();
             }
         });
+    }
+    /**
+     *发送验证码
+     */
+    public void sendCode(){
+        String url= UrlParam.GET_VERCODE_URL;
+        String userName=getIntent().getStringExtra("userName");
+        RequestParams params = new RequestParams();
+        params.put("Mobilephone", userName);
+        Log.i(getClass().getSimpleName(), "userInfo Mobilephone" + userName);
+        if(userName!=null || userName!=""){
+            AsyncHttpClient client=new AsyncHttpClient();
+            client.post(url, params, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Log.i(getClass().getSimpleName(), "Login Success[" + responseBody);
+                    Toast.makeText(getApplicationContext(), "验证码发送成功", Toast.LENGTH_SHORT).show();
+                    try {
+                        String errMsg=new String(responseBody,"GBK");
+                        JSONObject jo = new JSONObject(errMsg);
+                        if(jo.getBoolean("success")){
+                            Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(), jo.getString("errMsg"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.i(getClass().getSimpleName(), "login Failure");
+                    Toast.makeText(getApplicationContext(), "验证码发送失败", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }else {
+
+        }
     }
 
 }

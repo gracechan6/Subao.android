@@ -105,22 +105,22 @@ public class CropActivity extends BaseActivity{
         //保存截图，返回保存文件路径
         Log.i(getClass().getSimpleName(), "enter upload "+(ConstantConfig.TEMP_FILE_PATH + File.separator + System.currentTimeMillis() + ".png"));
         //保存图片到文件，传递文件名给调用者
-        Log.i(getClass().getSimpleName(), "enter upload");
-        File file2 = new File(ConstantConfig.TEMP_FILE_PATH);
-        Log.i(getClass().getSimpleName(), "enter upload"+(file2.exists()));
-        if (!file2.exists()) {
-            file2.mkdir();
+        String path = Environment.getExternalStorageDirectory().toString()+"/yongbao";
+        File filePath=new File(path);
+        if(!filePath.exists()){
+            filePath.mkdir();
         }
-        Log.i(getClass().getSimpleName(), "enter upload"+(file2.exists()));
+        String path2=path+"/.temp";
+        File filePath2=new File(path2);
+        if(!filePath2.exists()){
+            filePath2.mkdir();
+        }
         File file = new File(ConstantConfig.TEMP_FILE_PATH + File.separator + System.currentTimeMillis() + ".png");
-        Log.i(getClass().getSimpleName(), "enter upload 0"+file2.exists());
+        Log.i(getClass().getSimpleName(), "enter upload 0"+file.exists());
         try
         {
-            Log.i(getClass().getSimpleName(), "enter upload 1"+file.exists());
             file.createNewFile();
-            Log.i(getClass().getSimpleName(), "enter upload 2"+file.exists());
             OutputStream outputStream = new FileOutputStream(file);
-            Log.i(getClass().getSimpleName(), "enter upload 3"+file.exists());;
             mCropImageView.getCroppedImage().compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
@@ -150,6 +150,7 @@ public class CropActivity extends BaseActivity{
 
         //文件夹tmp
         String path = Environment.getExternalStorageDirectory().toString()+"/tmp";
+        Log.i(getClass().getSimpleName(), "enter takePhoto "+path);
         File path1 = new File(path);
         if(!path1.exists()){
             path1.mkdirs();
@@ -244,6 +245,7 @@ public class CropActivity extends BaseActivity{
         try
         {
             inputStream = new FileInputStream(new File(picturePath));
+            Log.i(getClass().getSimpleName(), "enter inputStream "+inputStream);
         } catch (FileNotFoundException e)
         {
             e.printStackTrace();

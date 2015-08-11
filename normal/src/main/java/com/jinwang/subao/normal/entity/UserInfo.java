@@ -6,7 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Created by dreamy on 2015/6/29.
  */
 public class UserInfo {
-    @JsonProperty("UUID")
+    public  String uuid;
+    public  String tel;
+    public  String userName;
+    public  String password;
+    public  String loginTime;
+    public  String role;
+   /* @JsonProperty("UUID")
     String uuid;
 
     @JsonProperty("tel")
@@ -15,11 +21,22 @@ public class UserInfo {
     @JsonProperty("username")
     String userName;
 
+    @JsonProperty("password")
+    String password;
+
     @JsonProperty("login_time")
     String loginTime;
 
-    @JsonProperty("os_type")
-    String osType;
+    @JsonProperty("role")
+    String role;*/
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getUserName()
     {
@@ -49,6 +66,16 @@ public class UserInfo {
     public void setTel(String tel)
     {
         this.tel = tel;
+    }
+
+    public String getRole()
+    {
+        return role;
+    }
+
+    public void setRole(String role)
+    {
+        this.role = role;
     }
 
 }

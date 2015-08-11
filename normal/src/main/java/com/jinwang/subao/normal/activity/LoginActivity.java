@@ -16,10 +16,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinwang.subao.normal.R;
+import com.jinwang.subao.normal.config.ActionConfig;
+import com.jinwang.subao.normal.config.ServerConfig;
+import com.jinwang.subao.normal.config.UrlParam;
 import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwang.subao.normal.MainActivity;
 import com.jinwang.subao.normal.dialog.LoadingDialog;
 import com.jinwang.subao.normal.utils.PreferenceUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
 
 /**
  * Created by dreamy on 2015/6/23.
@@ -46,8 +54,9 @@ public class LoginActivity extends BaseActivity {
         loginView = findViewById(R.id.login);
         registerView = findViewById(R.id.register);
         forgetView = findViewById(R.id.forget);
-
+        //登陆名绑定
         userNameEdit = (EditText) findViewById(R.id.et_username);
+        //登陆密码绑定
         passwordEdit = (EditText) findViewById(R.id.et_password);
 
         SharedPreferences sp = getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_PRIVATE);
@@ -130,22 +139,45 @@ public class LoginActivity extends BaseActivity {
 
         //合法性检查
         if(userName == null || userName.toString().trim().length() == 0){
-            Log.i(getClass().getSimpleName(), "用户名不能为空login");
-            Toast.makeText(getApplicationContext(), "用户名不能为空login", Toast.LENGTH_SHORT).show();
+            Log.i(getClass().getSimpleName(), "用户名不能为空");
+            Toast.makeText(getApplicationContext(), "用户名不能为空", Toast.LENGTH_SHORT).show();
             loadingDialog.dismiss();
             return;
         }
         if(password == null || password.toString().trim().length() == 0){
-            Toast.makeText(getApplicationContext(), "密码不能为空login", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
             loadingDialog.dismiss();
             return;
         }
-        PreferenceUtils.saveUserInfo(LoginActivity.this, userName, password);
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-        loadingDialog.dismiss();
+        RequestParams params = new RequestParams();
+        params.put("Mobilephone", userName);
+        params.put("Password", password);
+        params.put("OperationType", "A");
+        String url = UrlParam.LOGIN_URL;
+        Log.i(getClass().getSimpleName(), "Login url " + url);
+        Log.i(getClass().getSimpleName(), "Login params " + params.toString());
+        AsyncHttpClient client=new AsyncHttpClient();
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                Log.i(getClass().getSimpleName(), "Login Success[" + new String(responseBody));
+                PreferenceUtils.saveUserInfo(LoginActivity.this, userName, password);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                loadingDialog.dismiss();
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                Log.i(getClass().getSimpleName(), "login Failure");
+                PreferenceUtils.saveUserInfo(LoginActivity.this, userName, password);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                loadingDialog.dismiss();
+            }
+        });
 //        RequestParams params = new RequestParams();
 //        params.put(AppParams.USERNAME, userName);
 //        params.put(AppParams.PASSWORD, password);
