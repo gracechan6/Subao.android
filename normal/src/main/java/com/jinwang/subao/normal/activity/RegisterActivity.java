@@ -36,6 +36,7 @@ import java.io.UnsupportedEncodingException;
 
 /**
  * Created by dreamy on 2015/6/23.
+ * 注册
  */
 public class RegisterActivity extends BaseActivity {
     private EditText userNameEdit;
@@ -77,12 +78,7 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(getApplicationContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        //打开新的activity
-        sendCode();
-        Intent intent = new Intent(RegisterActivity.this, MobileCodeActivity.class);
-        intent.putExtra("userName", userName);
-        intent.putExtra("password",password);
-        startActivity(intent);
+        sendCode(userName, password);
 //        RequestParams params = new RequestParams();
 //        params.put(AppParams.USERNAME, userName);
 //        String url = UrlParam.GET_VERCODE_URL;
@@ -155,24 +151,27 @@ public class RegisterActivity extends BaseActivity {
     /**
      *发送验证码
      */
-    public void sendCode(){
+    public void sendCode(final String userName,final String password){
         String url= UrlParam.GET_VERCODE_URL;
-        String userName=getIntent().getStringExtra("userName");
         RequestParams params = new RequestParams();
         params.put("Mobilephone", userName);
-        Log.i(getClass().getSimpleName(), "userInfo Mobilephone" + userName);
+        Log.i(getClass().getSimpleName(), "userInfo Mobilephone " + userName);
         if(userName!=null || userName!=""){
             AsyncHttpClient client=new AsyncHttpClient();
             client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    Log.i(getClass().getSimpleName(), "Login Success[" + responseBody);
-                    Toast.makeText(getApplicationContext(), "验证码发送成功", Toast.LENGTH_SHORT).show();
                     try {
                         String errMsg=new String(responseBody,"GBK");
                         JSONObject jo = new JSONObject(errMsg);
+                        Log.i(getClass().getSimpleName(), "Login Success" + jo.toString());
                         if(jo.getBoolean("success")){
-                            Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
+                            //打开新的activity
+                            Intent intent = new Intent(RegisterActivity.this, MobileCodeActivity.class);
+                            intent.putExtra("userName", userName);
+                            intent.putExtra("password", password);
+                            startActivity(intent);
+//                            Toast.makeText(getApplicationContext(), "发送成功", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(getApplicationContext(), jo.getString("errMsg"), Toast.LENGTH_SHORT).show();
                         }

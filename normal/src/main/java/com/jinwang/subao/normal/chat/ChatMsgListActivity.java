@@ -37,7 +37,7 @@ public class ChatMsgListActivity extends BaseActivity {
         setContentView(R.layout.activity_msg_list);
 //        setContentView(R.layout.layout_login);
         initToolBar();
-//        ChatModel.insertChatListTestData(this);
+        ChatModel.insertChatListTestData(this);
 //        mListView = (ListView) findViewById(R.id.listview);
         mListView = (ListView) findViewById(R.id.listview);
 //        mList = ChatModel.queryChatList(this);

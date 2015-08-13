@@ -13,7 +13,13 @@ public class UrlParam {
     public static final String REGISTER_URL = BASE_URL + "ybmobile/MobileReg_Register.action?";
     //发送验证码url
     public static final String GET_VERCODE_URL = BASE_URL + "ybmobile/CheckMobileCode_produceCode.action?";
-    //验证码验证
+    //验证码验证url
     public static final String VERCODE_URL = BASE_URL + "ybmobile/CheckMobileCode_checkCode.action?";
+    //头像图片上传url
+    public static final String SENDPICTURE_URL = BASE_URL + "ybplatform/mobileUpload.jsp?";
+    //头像图片下载url
+    public static final String GETPICTURE_URL = BASE_URL + "ybmobile/DownLoadPic_downLoadPic.action?";
+    //密码修改url
+    public static final String CHANGEPASSWORD_URL = BASE_URL + "ybmobile/ChangePwd_updatePwd.action?";
 
 }

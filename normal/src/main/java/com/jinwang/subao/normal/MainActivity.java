@@ -1,6 +1,7 @@
 package com.jinwang.subao.normal;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,9 +17,12 @@ import android.widget.TextView;
 import com.jinwang.subao.normal.activity.SettingActivity;
 import com.jinwang.subao.normal.chat.ChatMsgListActivity;
 import com.jinwang.subao.normal.chat.ddpush.ChatService;
+import com.jinwang.subao.normal.utils.PreferenceUtils;
 import com.jinwangmobile.ui.base.activity.BaseWebviewActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -40,8 +44,22 @@ public class MainActivity extends WebviewActivity {
         bindDDPushStart();
         initToolBar();
         setUrlPath(rootUrl + "index.html");
+//        intoIndex();
         webviewLoadData();
     }
+    public void intoIndex(){
+        SharedPreferences sp=getSharedPreferences(PreferenceUtils.PREFERENCE,MODE_APPEND);
+        final String mUuid = sp.getString(PreferenceUtils.PREFERENCE_MUUID, "");
+        JSONObject jb=new JSONObject();
+        try {
+            jb.put("Muuid", mUuid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.i(getClass().getSimpleName(), "登陆uuid" + jb.toString());
+        mWebview.loadUrl("javascript:jwGobal.getUserName(" + jb.toString() + ")");
+    }
+
     protected void initToolBar()
     {
         //设置自定义标题
@@ -53,6 +71,7 @@ public class MainActivity extends WebviewActivity {
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         mTitle.setText(getString(R.string.app_name));
         mActionBar.addView(mTitle, lp);
+        //消息按钮绑定
         mActionBar.setNavigationIcon(R.drawable.icon_message);
         mActionBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +80,7 @@ public class MainActivity extends WebviewActivity {
                 startActivity(intent);
             }
         });
-
+        //设置按钮绑定
         mActionBar.inflateMenu(R.menu.menu_settings);
         mActionBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

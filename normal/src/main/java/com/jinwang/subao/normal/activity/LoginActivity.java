@@ -28,6 +28,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by dreamy on 2015/6/23.
@@ -154,28 +158,39 @@ public class LoginActivity extends BaseActivity {
         params.put("Password", password);
         params.put("OperationType", "A");
         String url = UrlParam.LOGIN_URL;
-        Log.i(getClass().getSimpleName(), "Login url " + url);
-        Log.i(getClass().getSimpleName(), "Login params " + params.toString());
+        Log.i(getClass().getSimpleName(), "Login params " + url+params.toString());
         AsyncHttpClient client=new AsyncHttpClient();
         client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.i(getClass().getSimpleName(), "Login Success[" + new String(responseBody));
-                PreferenceUtils.saveUserInfo(LoginActivity.this, userName, password);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                loadingDialog.dismiss();
+                Log.i(getClass().getSimpleName(), "Login Success");
+                String errMsg= null;
+                try {
+                    errMsg = new String(responseBody,"GBK");
+                    Log.i(getClass().getSimpleName(), "Login Success" + errMsg);
+                    JSONObject jo = new JSONObject(errMsg);
+                    if(jo.getBoolean("success")){
+                        PreferenceUtils.saveUserInfo(LoginActivity.this, userName, password,jo.getJSONArray("returnData").getJSONObject(0).getString("mUuid"));
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        loadingDialog.dismiss();
+                    }else{
+                        loadingDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), jo.getString("errMsg"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Log.i(getClass().getSimpleName(), "login Failure");
-                PreferenceUtils.saveUserInfo(LoginActivity.this, userName, password);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
                 loadingDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "访问连接错误", Toast.LENGTH_SHORT).show();
             }
         });
 //        RequestParams params = new RequestParams();

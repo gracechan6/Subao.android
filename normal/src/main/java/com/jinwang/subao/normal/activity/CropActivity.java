@@ -99,7 +99,6 @@ public class CropActivity extends BaseActivity{
         }
 
     }
-
     protected final void upload()
     {
         //保存截图，返回保存文件路径

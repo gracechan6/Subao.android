@@ -147,7 +147,7 @@ public class ResAuthActivity extends BaseActivity {
                         returnData = returnData.replace("]", "");
                         RegisterResult result = AbsJSONUtils.defaultInstance().JSON2Object(returnData, RegisterResult.class);
                         if (result.getReturnFlag().endsWith("1")) {
-                            PreferenceUtils.saveUserInfo(ResAuthActivity.this, user, password);
+//                            PreferenceUtils.saveUserInfo(ResAuthActivity.this, user, password);
                             Intent intent = new Intent();
                             intent.setClass(ResAuthActivity.this, MainActivity.class);
                             startActivity(intent);

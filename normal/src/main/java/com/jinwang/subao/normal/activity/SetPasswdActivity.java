@@ -93,7 +93,7 @@ public class SetPasswdActivity extends BaseActivity {
                         returnData = returnData.replace("]", "");
                         RegisterResult result = AbsJSONUtils.defaultInstance().JSON2Object(returnData, RegisterResult.class);
                         if (result.getReturnFlag().endsWith("1")) {
-                            PreferenceUtils.saveUserInfo(SetPasswdActivity.this, user, password);
+//                            PreferenceUtils.saveUserInfo(SetPasswdActivity.this, user, password);
                             Intent intent = new Intent();
                             intent.setClass(SetPasswdActivity.this, MainActivity.class);
                             startActivity(intent);

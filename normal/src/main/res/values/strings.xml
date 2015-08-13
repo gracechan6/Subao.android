@@ -6,6 +6,7 @@
     <string name="action_mobile_code">验证</string>
     <string name="action_input_code">输入验证码</string>
     <string name="edit_user_info">编辑资料</string>
+    <string name="change_password">修改密码</string>
 
     <string name="action_message">消息</string>
     <string name="action_settings">设置</string>
