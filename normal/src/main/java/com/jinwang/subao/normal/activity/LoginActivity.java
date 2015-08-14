@@ -64,18 +64,13 @@ public class LoginActivity extends BaseActivity {
         passwordEdit = (EditText) findViewById(R.id.et_password);
 
         SharedPreferences sp = getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_PRIVATE);
-        String saveUserName = sp.getString(PreferenceUtils.PREFERENCE_USERNAME, "");
+        final String saveUserName = sp.getString(PreferenceUtils.PREFERENCE_USERNAME, "");
         if (saveUserName!=null){
             userNameEdit.setText(saveUserName);
             passwordEdit.setText(sp.getString(PreferenceUtils.PREFERENCE_PASSWORD, ""));
         }
         //登陆按钮绑定
         btnLogin = (Button) findViewById(R.id.btn_login);
-        //忘记密码按钮绑定
-        forgetPasswd = (TextView) findViewById(R.id.tv_forget_passwd);
-        //注册按钮绑定
-        register = (TextView) findViewById(R.id.tv_register);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +78,19 @@ public class LoginActivity extends BaseActivity {
                 doLogin();
             }
         });
+        //忘记密码按钮绑定
+        forgetPasswd = (TextView) findViewById(R.id.tv_forget_passwd);;
         forgetPasswd.setVisibility(View.VISIBLE);
         forgetPasswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(getClass().getSimpleName(), "forgetPasswd");
-                Intent intent = new Intent(LoginActivity.this, ForgetPasswdActivity.class);
+                Intent intent=new Intent(LoginActivity.this,ForgetPasswdActivity.class);
+                final String userName = userNameEdit.getText().toString();
+                if(userName!=null || userName!=""){
+                    intent.putExtra("mPhone",userName);
+                }else {
+                    intent.putExtra("mPhone","");
+                }
                 startActivity(intent);
             }
         });

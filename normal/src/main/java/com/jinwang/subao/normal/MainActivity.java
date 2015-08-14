@@ -18,11 +18,13 @@ import com.jinwang.subao.normal.activity.SettingActivity;
 import com.jinwang.subao.normal.chat.ChatMsgListActivity;
 import com.jinwang.subao.normal.chat.ddpush.ChatService;
 import com.jinwang.subao.normal.utils.PreferenceUtils;
-import com.jinwangmobile.ui.base.activity.BaseWebviewActivity;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.security.Policy;
 
 
 /**
@@ -44,20 +46,19 @@ public class MainActivity extends WebviewActivity {
         bindDDPushStart();
         initToolBar();
         setUrlPath(rootUrl + "index.html");
-//        intoIndex();
+        intoIndex();
         webviewLoadData();
     }
     public void intoIndex(){
-        SharedPreferences sp=getSharedPreferences(PreferenceUtils.PREFERENCE,MODE_APPEND);
+        SharedPreferences sp=getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_APPEND);
         final String mUuid = sp.getString(PreferenceUtils.PREFERENCE_MUUID, "");
         JSONObject jb=new JSONObject();
         try {
-            jb.put("Muuid", mUuid);
+            jb.put("Muuid",mUuid);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i(getClass().getSimpleName(), "登陆uuid" + jb.toString());
-        mWebview.loadUrl("javascript:jwGobal.getUserName(" + jb.toString() + ")");
+        setParams(jb);
     }
 
     protected void initToolBar()

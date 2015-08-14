@@ -188,26 +188,17 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
     </RelativeLayout>
-   <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/list_view_cell_height"
-            android:layout_below="@id/rel_qrcode"
-            android:layout_marginTop="15dp"
-       android:layout_centerHorizontal="true"
-       android:layout_centerVertical="true"
-            android:background="@drawable/select_outside_white">
-
-            <Button
-                android:id="@+id/exit_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:background="@drawable/login_btn_bg"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="注销登录"
-                android:textColor="#666A6C"/>
-        </RelativeLayout>
-
+    <Button
+        android:id="@+id/exit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rel_qrcode"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_button"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:textSize="20dp"
+        android:text="注销登录"
+        android:textColor="#ffffff" />
 </RelativeLayout>

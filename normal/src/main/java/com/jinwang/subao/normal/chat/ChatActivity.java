@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinwang.subao.normal.R;
+import com.jinwang.subao.normal.config.UrlParam;
 import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwang.subao.normal.chat.adapter.ChatMessageViewAdapter;
 import com.jinwang.subao.normal.chat.ddpush.ChatParams;
@@ -28,12 +29,17 @@ import com.jinwang.subao.normal.config.ActionConfig;
 import com.jinwang.subao.normal.config.AppParams;
 import com.jinwang.subao.normal.utils.ChatModel;
 import com.jinwang.subao.normal.utils.PreferenceUtils;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.apache.http.Header;
 import org.ddpush.im.util.StringUtil;
 import org.ddpush.im.v1.client.appserver.Pusher;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,13 +49,16 @@ import java.util.List;
  * Created by dreamy on 2015/6/25.
  */
 public class ChatActivity extends BaseActivity {
+    //设置标题
     private Toolbar mToolBar;
     private TextView mTitle;
     // 发送btn
     private Button mBtnSend;
     // 返回btn
 //    private Button mBtnBack;
+    //发送内容
     private EditText mEditTextContent;
+    //视图语句显示
     private ListView mListView;
     // 消息视图的Adapter
     private ChatMessageViewAdapter mAdapter;
@@ -65,9 +74,11 @@ public class ChatActivity extends BaseActivity {
         setContentView(R.layout.activity_chat);
         Bundle bundle = getIntent().getExtras();
         sender = bundle.getString("Sender");
+        Log.i(getClass().getSimpleName(),"传过来的sender "+sender);
         AppParams.ChatObject = sender;
         SharedPreferences sp = getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_PRIVATE);
         userName = sp.getString(PreferenceUtils.PREFERENCE_USERNAME, "");
+        //定义页面头部
         initToolBar();
         initView();// 初始化view
         initData(sender);// 初始化数据
@@ -76,6 +87,7 @@ public class ChatActivity extends BaseActivity {
 
     private void initView(){
         mListView = (ListView) findViewById(R.id.listview);
+        //绑定发送按钮
         mBtnSend = (Button) findViewById(R.id.btn_send);
         mBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,25 +117,74 @@ public class ChatActivity extends BaseActivity {
         String contString = mEditTextContent.getText().toString();
         if (contString.length() > 0) {
             ChatMessage entity = new ChatMessage();
-            entity.setDate(getDate());
-            entity.setContent(contString);
-            entity.setType(0);
-
-            entity.setSender(sender);
+            entity.setDate(getDate());//发出日期
+            entity.setContent(contString);//发出内容
+            entity.setType(0);//自己发出的消息为0
+            entity.setSender(sender);//发出手机号码
 //            entity.setSendTo(sender);
-            mChatList.add(entity);
-            mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
+            mChatList.add(entity);//添加到消息列表
 
+            mAdapter.notifyDataSetChanged();// 通知ListView，数据已发生改变
             mEditTextContent.setText("");// 清空编辑框数据
 
             mListView.setSelection(mListView.getCount() - 1);// 发送一条消息时，ListView显示选择最后一项
-
-            sendByDDPush(contString);
+            //调用接口推送消息到服务器
+            sendMessage(contString);
+//            sendByDDPush(contString);根据ddpush推送消息 已停用
             //插入数据库
             ChatModel.insertChatMessageItem(this, entity);
         }
     }
 
+    /**
+     * 发送消息到服务器
+     * @param message  消息内容
+     */
+    public void sendMessage(String message){
+        SharedPreferences sp=getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_APPEND);
+        final String mPhone=sp.getString(PreferenceUtils.PREFERENCE_USERNAME, "");
+        final String ToPhone="18815288493";
+        JSONObject jb=new JSONObject();
+        try {
+            jb.put("from",mPhone);
+            jb.put("to",ToPhone);
+            jb.put("message",message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url= UrlParam.SENDMESSAGE_URL;
+        RequestParams params=new RequestParams();
+        params.put("jsonString",jb.toString());
+        AsyncHttpClient client=new AsyncHttpClient();
+        Log.i(getClass().getSimpleName(),"发送连接"+url+params.toString());
+        client.post(url, params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                try {
+                    String msg=new String(responseBody,"GBK");
+                    Log.i(getClass().getSimpleName(),"得到的消息"+msg);
+                    try {
+                        JSONObject jo=new JSONObject(msg);
+                        if(jo.getBoolean("success")){
+                            Log.i(getClass().getSimpleName(),"发送消息成功");
+                        }else{
+                            Toast.makeText(getApplicationContext(), "发送消息失败，请重新发送", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
     private void sendByDDPush(String sendData){
         String serverIp = ChatParams.SERVER_IP;
         String pushPort = ChatParams.PUSH_PORT;

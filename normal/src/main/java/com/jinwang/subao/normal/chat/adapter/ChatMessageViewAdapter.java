@@ -1,6 +1,7 @@
 package com.jinwang.subao.normal.chat.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.jinwang.subao.normal.R;
 import com.jinwang.subao.normal.chat.entity.ChatMessage;
+import com.jinwang.subao.normal.utils.PreferenceUtils;
 
 import java.util.List;
 

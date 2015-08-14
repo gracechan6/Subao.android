@@ -21,5 +21,10 @@ public class UrlParam {
     public static final String GETPICTURE_URL = BASE_URL + "ybmobile/DownLoadPic_downLoadPic.action?";
     //密码修改url
     public static final String CHANGEPASSWORD_URL = BASE_URL + "ybmobile/ChangePwd_updatePwd.action?";
-
+    //忘记密码之发送验证码url
+    public static final String GETPWDFIRST_URL = BASE_URL + "ybmobile/ForgetPwd_doPwdFirst.action?";
+    //忘记密码之获得密码url
+    public static final String GETPWDSECOND_URL = BASE_URL + "ybmobile/ForgetPwd_doPwdSecond.action?";
+    //推送消息url
+    public static final String SENDMESSAGE_URL = BASE_URL + "ybmobile/MobileIosPush_push.action?";
 }

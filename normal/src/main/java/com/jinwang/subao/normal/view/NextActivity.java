@@ -75,6 +75,8 @@ public class NextActivity extends WebviewActivity {
                 public boolean onMenuItemClick(MenuItem menuItem) {
                     Log.i(getClass().getSimpleName(), "jwGobal.complete() ");
                     mWebview.loadUrl("javascript:jwGobal.complete()");
+//                    mWebview.loadUrl("javascript:jwGobal.getUserName("+"111"+")");
+//                    mWebview.loadUrl("file:///android_asset/mPuTong/userInfoQrcode.html?content=C0C2AD52-DD1D-C101-0FF0-BF01B4A1956A&size=100");
                     return true;
                 }
             });

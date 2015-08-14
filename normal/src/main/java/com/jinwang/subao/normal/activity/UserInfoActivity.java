@@ -1,27 +1,36 @@
 package com.jinwang.subao.normal.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jinwang.subao.normal.R;
+import com.jinwang.subao.normal.WebviewActivity;
 import com.jinwang.subao.normal.config.ConstantConfig;
 import com.jinwang.subao.normal.config.UrlParam;
 import com.jinwangmobile.ui.base.activity.BaseActivity;
 import com.jinwang.subao.normal.utils.PreferenceUtils;
 import com.jinwang.subao.normal.view.ActionSheet;
+import com.jinwangmobile.ui.base.activity.BaseWebviewActivity;
 import com.jinwangmobile.ui.base.view.CircleImageView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -35,6 +44,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.LinkedList;
+import java.util.List;
 
 import app.frame.cropper.CropImageView;
 
@@ -52,6 +63,8 @@ public class UserInfoActivity extends BaseActivity implements ActionSheet.Action
     private TextView mobile;
     private RelativeLayout relEdit;
     private CircleImageView headImage;
+    private WebView QR_Code;
+    private Button loginOut;
 
     @Override
     public  void onCreate(Bundle savedInstanceState){
@@ -86,13 +99,19 @@ public class UserInfoActivity extends BaseActivity implements ActionSheet.Action
     }
 
     private void initView(){
+        //昵称
         nickName = (TextView) findViewById(R.id.nick);
+        //速宝号
         yongbao = (TextView) findViewById(R.id.yongbao);
+        //手机号
         mobile = (TextView) findViewById(R.id.mobile);
         SharedPreferences sp = getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_PRIVATE);
-        String userName = sp.getString(PreferenceUtils.PREFERENCE_USERNAME, "");
+        final String userName = sp.getString(PreferenceUtils.PREFERENCE_USERNAME, "");
+        final String mUuid = sp.getString(PreferenceUtils.PREFERENCE_MUUID, "");
         mobile.setText(userName);
+        //头像
         headImage=(CircleImageView)findViewById(R.id.headPhoto);
+        //个人信息
         relEdit = (RelativeLayout) findViewById(R.id.photo);
         relEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +119,38 @@ public class UserInfoActivity extends BaseActivity implements ActionSheet.Action
                 showActionSheet();
             }
         });
+        //注销登陆绑定
+        loginOut=(Button)findViewById(R.id.exit_btn);
+        loginOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent=new Intent(UserInfoActivity.this,LoginActivity.class);
+                loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(loginIntent);
+            }
+        });
+        //二维码
+        QR_Code=(WebView)findViewById(R.id.webView);
+        Log.i(getClass().getSimpleName(), "二维码设置大小" + "file:///android_asset/mPuTong/userInfoQrcode.html?content=" + mUuid + "&size=300px");
+        QR_Code.setWebChromeClient(new WebChromeClient());
+        QR_Code.setWebViewClient(new WebViewClient());
+
+        WebSettings settings = QR_Code.getSettings();
+        //设置支持Javascript的参数
+        settings.setJavaScriptEnabled(true);
+        //设置可以支持缩放
+        settings.setSupportZoom(true);
+        //设置出现缩放工具
+        settings.setBuiltInZoomControls(true);
+        //设置允许访问文件数据
+        settings.setAllowFileAccess(true);
+        if(Build.VERSION.SDK_INT > 15) {
+            settings.setAllowFileAccessFromFileURLs(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+        }
+        settings.setCacheMode(-1);
+        settings.setAppCacheEnabled(true);
+        QR_Code.loadUrl("file:///android_asset/mPuTong/userInfoQrcode.html?content=" + mUuid + "&size=98");
     }
 
     public void showActionSheet() {

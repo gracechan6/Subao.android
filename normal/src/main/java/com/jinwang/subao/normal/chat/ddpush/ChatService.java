@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.IBinder;
 import android.os.PowerManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.jinwang.subao.normal.R;
@@ -80,6 +81,7 @@ public class ChatService extends Service {
                 String str = null;
                 try{
                     str = new String(message.getData(),5,message.getContentLength(), "UTF-8");
+                    Log.i(getClass().getSimpleName(),"得到推送的数据"+str);
                 }catch(Exception e){
                     e.printStackTrace();
                 }

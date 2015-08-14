@@ -241,7 +241,7 @@ public class ChatModel {
         values.put(ProviderSettings.ChatListColumns.DATE, chatItem.getDate());
         values.put(ProviderSettings.ChatListColumns.COUNT, chatItem.getCount());
         Uri uri2 = cr.insert(ProviderSettings.ChatListColumns.CONTENT_URI, values);
-        System.out.println(uri2.toString());
+//        System.out.println(uri2.toString());
     }
 
 

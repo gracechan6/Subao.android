@@ -189,27 +189,6 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
         setHeadPhoto();
     }
 
-    private void setHeadImage()
-    {
-//        //用户头像保存在头像目录下，以用户id为文件名
-//        UserInfo userInfo = (UserInfo) application.getSharedData().get(LoginParams.USER_INFO);
-//        final String headFilePath = ConstantConfig.HEADER_PATH + File.separator + userInfo.getUserId() + ".png";
-//        final File headF = new File(headFilePath);
-//
-//        Bitmap head = null;
-//
-//        //去掉这部分，解决不同手机设置图像显示不一致问题。 modify by zengjp
-//        //如果存在，直接使用，不存在，网络下载
-//        if (headF.exists())
-//        {
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.RGB_565;
-//            head = BitmapFactory.decodeFile(headFilePath, options);
-//
-//            headImage.setImageBitmap(head);
-//        }
-    }
-
     /**
      * 显示图片按键
      */

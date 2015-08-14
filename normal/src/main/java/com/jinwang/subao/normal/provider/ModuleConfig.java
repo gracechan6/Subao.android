@@ -10,6 +10,6 @@ public class ModuleConfig {
     public static final String TABLE_CHAT_LIST = "tab_chat_list";
     public static final String TABLE_CHAT_MESSAGE = "tab_chat_message";
 
-    public static final String AUTHORITY = "com.jinwangmobile.yongbao.provider.appProvider";
+    public static final String AUTHORITY = "com.jinwang.subao.normal.provider.appProvider";
     public static final String PARAMETER_NOTIFY = "notify";
 }

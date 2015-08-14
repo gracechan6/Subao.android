@@ -61,6 +61,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".activity.CodePasswdActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"

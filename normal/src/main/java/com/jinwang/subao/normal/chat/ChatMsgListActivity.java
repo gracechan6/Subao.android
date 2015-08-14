@@ -38,24 +38,24 @@ public class ChatMsgListActivity extends BaseActivity {
 //        setContentView(R.layout.layout_login);
         initToolBar();
         ChatModel.insertChatListTestData(this);
-//        mListView = (ListView) findViewById(R.id.listview);
         mListView = (ListView) findViewById(R.id.listview);
-//        mList = ChatModel.queryChatList(this);
-//        adapter = new ChatMessageListAdapter(this, mList);
-//        mListView.setAdapter(adapter);
-        /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
+        mList = ChatModel.queryChatList(this);
+        Log.i(getClass().getSimpleName(),"从数据库获取到的List"+mList.toString());
+        adapter = new ChatMessageListAdapter(this, mList);
+        mListView.setAdapter(adapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3)
-            {
+                                    long arg3) {
                 // TODO Auto-generated method stub
                 Intent intent = new Intent(ChatMsgListActivity.this, ChatActivity.class);
+
                 intent.putExtra("Sender", adapter.getItem(arg2).getSenderTel());
                 startActivity(intent);
 
                 Log.i(this.getClass().getName(), "Item clicked");
-            }} );*/
+            }
+        });
     }
 
     protected void initToolBar()
