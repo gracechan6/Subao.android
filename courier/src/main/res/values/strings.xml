@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">速宝快递</string>
+
+    <string name="app_login">登录</string>
+    <string name="action_register">注册</string>
+    <string name="action_mobile_code">验证</string>
+    <string name="action_input_code">输入验证码</string>
+    <string name="edit_user_info">编辑资料</string>
+    <string name="change_password">修改密码</string>
+
+    <string name="action_message">消息</string>
+    <string name="action_settings">设置</string>
+    <string name="action_success">完成</string>
+    <string name="logining">正在加载...</string>
+    <string name="auth_prompt">我们已经发送验证码短信到</string>
+    <string name="input_auth_code">请输入收到的验证码！</string>
+
+    <string name="express_inquiry">快件查询</string>
+    <string name="express_delivery">我要寄件</string>
+
+    <string name="cancel">取消</string>
+    <string name="ok">确认</string>
+
+    <string name="sd_not_exist">SD 卡不能使用!</string>
+    <string name="loading">正在加载...</string>
+
+    <string name="take_photo">拍照</string>
+    <string name="from_photo">从相册中选取</string>
+</resources>

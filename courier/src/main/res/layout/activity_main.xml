@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg">
+    <include layout="@layout/layout_toolbar_"
+        android:id="@+id/toolbar"/>
+    <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar" />
+    <!--<RadioGroup android:id="@+id/radioGroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|center_horizontal">
+        <include
+            android:id="@+id/rb_msg"
+            android:layout_weight="1"
+            layout="@layout/tab_item_inquiry"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp" />
+        <include
+            android:id="@+id/rb_contract"
+            android:layout_weight="1"
+            layout="@layout/tab_item_delivery"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"/>
+    </RadioGroup>
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:id="@+id/webView"
+        android:layout_gravity="center_horizontal"/>-->
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <include layout="@layout/layout_toolbar_"
+        android:id="@+id/toolbar"/>
+    <RelativeLayout
+        android:id="@+id/rl_prompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toolbar">
+    <TextView
+        android:id="@+id/tv_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/auth_prompt"
+        android:textColor="#d9d7d1"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_auth"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="1234567890123"
+        android:textColor="#00a0e9"
+        android:textSize="18sp" />
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_prompt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+
+        android:background="@drawable/edit_rectangle"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:singleLine="true"
+        android:hint="@string/input_auth_code" />
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_code"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_button"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="40dp"
+        android:textSize="20dp"
+        android:text="完成"
+        android:textColor="#ffffff" />
+</RelativeLayout>
+

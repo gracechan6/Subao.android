@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:id="@+id/photo">
+
+    <com.jinwangmobile.ui.base.view.CircleImageView
+        android:id="@+id/headPhoto"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/test_photo"
+        app:border_color_="#00ffffff"
+        app:border_width_="0dp"/>
+
+    <TextView
+        android:id="@+id/useName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="王小波"
+        android:layout_alignTop="@id/headPhoto"
+        android:layout_toRightOf="@id/headPhoto"
+        android:paddingLeft="10dp"
+        android:textColor="#3f444b"
+        android:textSize="@dimen/text_size_small"/>
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1小时前"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:textColor="#83868d"
+        android:textSize="@dimen/text_size_xxsmall"/>
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="这是第一条消息"
+        android:layout_toRightOf="@id/headPhoto"
+        android:paddingLeft="10dp"
+        android:layout_below="@id/useName"
+        android:textColor="#7d899a"
+        android:textSize="@dimen/text_size_xsmall"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/headPhoto"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="18dp"
+        android:background="#d1dae7"/>
+</RelativeLayout>

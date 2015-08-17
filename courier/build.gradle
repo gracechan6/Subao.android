@@ -1,0 +1,40 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.jinwang.subao.courier"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 10
+        versionName "2.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+}
+
+dependencies {
+//    compile fileTree(dir: 'libs', include: ['*.jar'])
+//    compile 'com.android.support:appcompat-v7:22.2.0'
+//    compile project(':ui_base')
+//    compile 'com.jinwang.mobile:ui-base:1.1.0'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile files('libs/ddpush-1.0.02.jar')
+    compile project(':subaoshared')
+}
+
+
+repositories {
+    maven { url 'http://192.168.0.89:8081/nexus/content/groups/public/' }
+    maven { url 'http://192.168.0.89:8081/nexus/content/repositories/thirdparty/'}
+}

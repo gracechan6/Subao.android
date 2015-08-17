@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="text_color_white">#FFFFFFFF</color>
+    <color name="text_color_white_dark">#FFFFF0FF</color>
+    <color name="switch_checked">#4CD964</color>
+    <color name="switch_stoke">#e5e5e5</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="blue">#00AAFF</color>
+    <color name="gray">#8A8A8A</color>
+    <color name="black">#515558</color>
+</resources>

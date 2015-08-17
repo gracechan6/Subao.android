@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+
+    <include layout="@layout/layout_toolbar_"
+        android:id="@+id/toolbar"/>
+
+    <RelativeLayout
+        android:id="@+id/login_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="#2d2e38">
+        <RelativeLayout
+            android:id="@+id/lfg_user"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp">
+            <TextView
+                android:id="@+id/tv_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="验证码已经发送到"
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:textColor="#f5f3eb"/>
+            <TextView
+                android:id="@+id/lfg_mphone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_code"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:layout_marginLeft="20dp"
+                android:textSize="20sp"
+                android:textColor="#4a86e8"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/lfg_mcode"
+            android:layout_below="@id/lfg_user"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp">
+
+            <EditText
+                android:id="@+id/lfg_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="请输入验证码"
+                android:textSize="25sp"
+                android:textColorHint="#2d2e38"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/writer_code_shape"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <View
+            android:id="@+id/hor_line"
+            android:layout_below="@id/rl_user"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="25dp"
+            android:background="#676668"/>
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_Code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_layout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_button"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:textSize="20dp"
+        android:text="验证"
+        android:textColor="#ffffff" />
+</RelativeLayout>
+
