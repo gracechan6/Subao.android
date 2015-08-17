@@ -27,9 +27,7 @@ public class NextActivity extends WebviewActivity {
             String transferData = data.getStringExtra(EXTRA_TRANSFER_DATA);
             //有回传数据
             if (null != transferData) {
-
                 Log.i(getClass().getSimpleName(), "Transfer callback data: " + transferData);
-
                 //传递参数
 //                mWebview.loadUrl("javascript:jwGobal.complete(" + pageNum + ")");
                 mWebview.loadUrl("javascript:jwGobal.transferData(" + transferData + ")");

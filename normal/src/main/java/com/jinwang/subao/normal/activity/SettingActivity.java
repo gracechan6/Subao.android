@@ -89,6 +89,13 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
             }
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setHeadPhoto();
+    }
+
     @Override
     public  void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -98,7 +105,6 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
 //        initUserInfo();
         setHeadPhoto();
     }
-
     protected void initToolBar()
     {
         mToolBar = (Toolbar)findViewById(R.id.toolbar);

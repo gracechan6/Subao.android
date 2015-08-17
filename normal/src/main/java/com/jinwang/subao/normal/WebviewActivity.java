@@ -88,11 +88,14 @@ public class WebviewActivity extends BaseWebviewActivity {
             //页面地址
             String url = data.getString("destUrl");
 
-            //转换为绝对路径，复写父类该方法，默认不变返回
-            url = this.pathToAbsPath(url);
-
+            Log.i(getClass().getSimpleName(), "获取URL的值" + url);
             Intent destIntent = new Intent();
-
+            //转换为绝对路径，复写父类该方法，默认不变返回
+            if(url.indexOf("kaidi100")>-1){
+                url="http://m.kuaidi100.com";
+            }else {
+                url = this.pathToAbsPath(url);
+            }
             //url
             destIntent.putExtra(EXTRA_URL_PATH, url);
 
@@ -115,6 +118,7 @@ public class WebviewActivity extends BaseWebviewActivity {
                 //按页面编号显示不同的界面
                 case 0:
                     destIntent.setClass(this, NextActivity.class);
+//                    mWebview.loadUrl("http://m.kuaidi100.com");
                     break;
                 default:
                     destIntent.setClass(this, NextActivity.class);

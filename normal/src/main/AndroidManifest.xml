@@ -81,11 +81,11 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
-        <activity
+        <!--<activity
             android:name=".activity.ChangePasswdActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
-        </activity>
+        </activity>-->
         <activity
             android:name=".activity.CropActivity"
             android:windowSoftInputMode="adjustPan"
