@@ -116,7 +116,7 @@ public class LoginActivity extends BaseActivity {
         mTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         mTitle.setText(getString(R.string.app_login));
         mToolBar.addView(mTitle, lp);
-        mToolBar.setNavigationIcon(R.drawable.icon_back);
+//        mToolBar.setNavigationIcon(R.drawable.icon_back);
         /*mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

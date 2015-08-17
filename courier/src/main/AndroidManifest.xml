@@ -32,7 +32,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <activity android:name="com.jinwang.test.TestBaseWebviewActivity" />
+        <activity android:name=".TestBaseWebviewActivity" />
         <activity
             android:name=".NextActivity">
         </activity>

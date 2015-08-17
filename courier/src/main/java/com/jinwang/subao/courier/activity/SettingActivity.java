@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -35,12 +36,25 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by dreamy on 2015/6/29.
@@ -304,45 +318,70 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
         Log.i(getClass().getSimpleName(), "enter setHeadPhoto " + headFilePath);
         //绘图
         Bitmap head=null;
-        Log.i(getClass().getSimpleName(), "headF.exists "+headF.exists());
-        if(headF.exists()){
+        Log.i(getClass().getSimpleName(), "headF.exists " + headF.exists());
+        if(!headF.exists()){
             //解决加载大图片内存溢出问题
             BitmapFactory.Options options=new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.RGB_565;
             head = BitmapFactory.decodeFile(headFilePath, options);
             headImage.setImageBitmap(head);
-        }else{
-            String url=UrlParam.GETPICTURE_URL;
+        }else {
+            String url = UrlParam.GETPICTURE_URL;
             RequestParams params = new RequestParams();
-            params.put("Muuid",mUuid);
-            AsyncHttpClient client=new AsyncHttpClient();
-            client.post(url,params,new JsonHttpResponseHandler("GBK"){
+            params.put("Muuid", mUuid);
+            AsyncHttpClient client = new AsyncHttpClient();
+            client.post(url, params, new AsyncHttpResponseHandler() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    super.onSuccess(statusCode, headers, response);
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
-                        if(response.getBoolean("success")){
-                            Log.i(getClass().getSimpleName(), "show getPictureUrl "+ response.getString("pathLoad"));
-                            //绘图
-                            Bitmap head=null;
-                            BitmapFactory.Options options=new BitmapFactory.Options();
-                            options.inPreferredConfig = Bitmap.Config.RGB_565;
-                            head = BitmapFactory.decodeFile(response.getString("pathLoad"), options);
-                            headImage.setImageBitmap(head);
-                        }
+                        Bitmap head=null;
+                        String msg=new String(responseBody,"GBK");
+                        JSONObject jb=new JSONObject(msg);
+                        loadPicFromUrl(jb.getString("pathLoad"),headFilePath);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                    /*try{
+                        headF.createNewFile();
+                        OutputStream outputStream = new FileOutputStream(headF);
+                        head.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                        outputStream.flush();
+                        outputStream.close();
+                    }catch (IOException e){
+                        Log.e(getClass().getSimpleName(), e.toString());
+                    }*/
                 }
-
                 @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Toast.makeText(getApplicationContext(), "网络连接失败", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
-
+    public void loadPicFromUrl(String url,String headFilePath) throws IOException {
+        Bitmap bitmap = null;
+        URL imgUrl=new URL(url);
+        DataInputStream dataInputStream=new DataInputStream(imgUrl.openStream());
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(headFilePath));
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = dataInputStream.read(buffer)) > 0) {
+            fileOutputStream.write(buffer, 0, length);
+        }
+        dataInputStream.close();
+        fileOutputStream.close();
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        Bitmap head = BitmapFactory.decodeFile(headFilePath, options);
+        headImage.setImageBitmap(head);
+    }
+    /**
+     * 修改密码
+     */
     public void changePasswd(){
         SharedPreferences sp = getSharedPreferences(PreferenceUtils.PREFERENCE, MODE_PRIVATE);
         final String savePassword = sp.getString(PreferenceUtils.PREFERENCE_PASSWORD, "");
@@ -364,6 +403,12 @@ public class SettingActivity extends BaseActivity implements ActionSheet.ActionS
         newFragment.show(ft, "dialog");
     }
 
+    /**
+     * 修改密码fradment调用
+     * @param tag
+     * @param cancelled
+     * @param message   传回来的信息
+     */
     public void onDialogDone(String tag, boolean cancelled, CharSequence message) {
         if(cancelled){
             switch (message.toString()){

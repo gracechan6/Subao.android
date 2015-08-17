@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.widget.TextView;
 
 import com.jinwang.subao.courier.activity.SettingActivity;
@@ -29,6 +30,8 @@ public class MainActivity extends WebviewActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WebSettings settings = mWebview.getSettings();
+        settings.setDomStorageEnabled(true);
         initToolBar();
         setUrlPath("file:///android_asset/mCourier/index.html");
         intoIndex();
