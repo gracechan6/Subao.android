@@ -6,6 +6,8 @@
 
     <string name="action_message">消息</string>
     <string name="action_settings">设置</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="forget_get_password">输入新密码</string>
     <string name="logining">正在加载...</string>
     <string name="auth_prompt">我们已经发送验证码短信到</string>
     <string name="input_auth_code">请输入收到的验证码！</string>

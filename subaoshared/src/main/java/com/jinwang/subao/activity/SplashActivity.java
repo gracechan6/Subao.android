@@ -15,8 +15,6 @@ public class SplashActivity extends AppCompatActivity {
 
         //初始化应用，创建数据库，启动消息推送等
 
-
-
         //初始化完成后，启动主界面
     }
 

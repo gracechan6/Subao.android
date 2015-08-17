@@ -23,7 +23,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 
     compile 'com.jinwangmobile:core-dataparser:1.0.0-SNAPSHOT'
-    compile 'com.jinwang.mobile:ui-base:1.0.3'
+    compile 'com.jinwang.mobile:ui-base:1.1.1'
     compile 'com.loopj.android:android-async-http:1.4.8'
     compile project(':cropper')
 }
